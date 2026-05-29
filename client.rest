@@ -1,0 +1,35 @@
+@baseUrl = http://localhost:3000
+
+
+# Messages
+
+### Create
+POST {{baseUrl}}/messages
+Content-Type: application/json
+
+{
+  "text": "This is a test",
+  "from": "John Doe",
+  "to": "Jane Doe"
+}
+
+### All
+GET {{baseUrl}}/messages
+# ?limit=10
+# &offset=10
+
+### One
+GET {{baseUrl}}/messages/2
+
+### Edit
+PATCH {{baseUrl}}/messages/2
+Content-Type: application/json
+
+{
+ 
+  "from": "John Doe",
+  "to": "testando"
+}
+
+### Delete
+DELETE {{baseUrl}}/messages/1
