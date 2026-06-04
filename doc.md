@@ -11,4 +11,10 @@
 
 > Diferença entre DTO, entity e tipagem
 
-A **Entity** representa o **modelo do banco** e nunca deve ser exposta diretamente ao usuário. O **DTO** define exatamente o que entra e o que sai da aplicação.
+- A **Entity** representa o **modelo do banco** e nunca deve ser exposta diretamente ao usuário. 
+- O **DTO** define exatamente o que entra e o que sai da aplicação.
+
+## Patterns
+
+Padrão repositório, cada vez que crio uma entidade , estou criando um repositorio que pode manipular os dados dessa entidade na base de dados.
+

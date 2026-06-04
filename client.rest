@@ -8,7 +8,7 @@ POST {{baseUrl}}/messages
 Content-Type: application/json
 
 {
-  "text": "This is a test",
+  "text": "This message 3",
   "from": "John Doe",
   "to": "Jane Doe"
 }
@@ -19,16 +19,14 @@ GET {{baseUrl}}/messages
 # &offset=10
 
 ### One
-GET {{baseUrl}}/messages/2
+GET {{baseUrl}}/messages/1
 
 ### Edit
 PATCH {{baseUrl}}/messages/2
 Content-Type: application/json
 
 {
- 
-  "from": "John Doe",
-  "to": "testando"
+  "text": "Text changed",
 }
 
 ### Delete
