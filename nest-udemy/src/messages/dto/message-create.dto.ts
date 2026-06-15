@@ -1,4 +1,9 @@
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsPositive,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 export class MessageCreateDto {
   @IsString()
@@ -6,17 +11,23 @@ export class MessageCreateDto {
   @MinLength(5)
   readonly text: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(2)
-  @MaxLength(30)
-  readonly from: string;
+  @IsPositive()
+  fromId: number;
 
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(2)
-  @MaxLength(30)
-  readonly to: string;
+  @IsPositive()
+  toId: number;
+
+  // @IsString()
+  // @IsNotEmpty()
+  // @MinLength(2)
+  // @MaxLength(30)
+  // readonly from: string;
+
+  // @IsString()
+  // @IsNotEmpty()
+  // @MinLength(2)
+  // @MaxLength(30)
+  // readonly to: string;
 }
 
 // o que eu preciso para criar uma messagem

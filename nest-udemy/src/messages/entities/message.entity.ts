@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Person } from '../../people/entities/person.entity';
 
 @Entity()
 export class Message {
@@ -13,12 +16,6 @@ export class Message {
 
   @Column({ type: 'varchar', length: 255 })
   text: string;
-
-  @Column({ type: 'varchar', length: 50 })
-  from: string;
-
-  @Column({ type: 'varchar', length: 50 })
-  to: string;
 
   @Column({ default: false })
   isRead: boolean;
@@ -31,6 +28,14 @@ export class Message {
 
   @UpdateDateColumn()
   updatedAt?: Date;
+
+  @ManyToOne(() => Person) // Muitas mensagens podem ser enviadas por uma única pessoa
+  @JoinColumn({ name: 'from' }) // Especifica a coluna "de" que armazena o ID da pessioa que ENVIOU a mensagem
+  from: Person;
+
+  @ManyToOne(() => Person) // Muitas mensagens podem ser enviadas por uma única pessoa
+  @JoinColumn({ name: 'to' }) // Especifica a coluna "de" que armazena o ID da pessioa que ENVIOU a mensagem
+  to: Person;
 }
 
 // Entidade já pronta , da messagem

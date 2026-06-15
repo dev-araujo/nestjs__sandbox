@@ -9,8 +9,8 @@ Content-Type: application/json
 
 {
   "text": "This message 3",
-  "from": "John Doe",
-  "to": "Jane Doe"
+  "fromId":5,
+  "toId": 3
 }
 
 ### All
@@ -19,7 +19,7 @@ GET {{baseUrl}}/messages
 # &offset=10
 
 ### One
-GET {{baseUrl}}/messages/1
+GET {{baseUrl}}/messages/5
 
 ### Edit
 PATCH {{baseUrl}}/messages/2
@@ -40,9 +40,9 @@ POST {{baseUrl}}/people
 Content-Type: application/json
 
 {
-  "email": "joao@email.com",
-  "name": "João Silva",
-  "password": "123456"
+  "email": "leo@email.com",
+  "name": "Leo",
+  "password": "5678910"
 }
 
 ### All
@@ -52,11 +52,12 @@ GET {{baseUrl}}/people
 GET {{baseUrl}}/people/1
 
 ### Edit
-PATCH {{baseUrl}}/people/1
+PATCH {{baseUrl}}/people/3
 Content-Type: application/json
 
 {
-  "name": "João S. Atualizado"
+  "name": "João S. Atualizado",
+  "email":"new@gmail.com"
 }
 
 ### Delete

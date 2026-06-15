@@ -13,7 +13,11 @@ export class PeopleService {
   ) {}
 
   async findAll() {
-    const people = await this.personRepository.find();
+    const people = await this.personRepository.find({
+      order: {
+        id: 'desc',
+      },
+    });
     return people;
   }
 
@@ -35,14 +39,19 @@ export class PeopleService {
   }
 
   async create(body: PersonCreateDto) {
+
     const person = this.personRepository.create(body);
     return this.personRepository.save(person);
   }
 
   async update(id: number, body: PersonUpdateDto) {
+    const newPerson = {
+      name: body?.name,
+      password: body?.password,
+    };
     const person = await this.personRepository.preload({
       id,
-      ...body,
+      ...newPerson,
     });
 
     if (!person) {

@@ -4,16 +4,36 @@ import { MessageCreateDto } from './dto/message-create.dto';
 import { MessageUpdateDto } from './dto/message-update.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PeopleService } from '../people/people.service';
 
 @Injectable()
 export class MessagesService {
   constructor(
     @InjectRepository(Message)
     private readonly messageRepository: Repository<Message>,
+    private readonly peopleService: PeopleService,
   ) {}
 
   async findAll() {
-    const messages = await this.messageRepository.find();
+    const messages = await this.messageRepository.find({
+      relations: {
+        from: true,
+        to: true,
+      },
+      order: {
+        id: 'desc',
+      },
+      select: {
+        from: {
+          id: true,
+          name: true,
+        },
+        to: {
+          id: true,
+          name: true,
+        },
+      },
+    });
     return messages;
   }
 
@@ -21,6 +41,20 @@ export class MessagesService {
     const message = await this.messageRepository.findOne({
       where: {
         id,
+      },
+      relations: {
+        from: true,
+        to: true,
+      },
+      select: {
+        from: {
+          id: true,
+          name: true,
+        },
+        to: {
+          id: true,
+          name: true,
+        },
       },
     });
 
@@ -35,13 +69,30 @@ export class MessagesService {
   }
 
   async create(body: MessageCreateDto) {
+    const { fromId, toId } = body;
+    // encontrar a pessoa que está criando a mensagem
+    const from = await this.peopleService.findOne(fromId);
+    // encontrar a pessoa para quem a mensagem está sendo enviado
+    const to = await this.peopleService.findOne(toId);
     const newMessage: any = {
-      ...body,
+      text: body.text,
+      from,
+      to,
       isRead: false,
       date: new Date(),
     };
     const message = await this.messageRepository.create(newMessage);
-    return this.messageRepository.save(message);
+    await this.messageRepository.save(message);
+
+    return {
+      ...message,
+      from: {
+        id: newMessage.from.id,
+      },
+      to: {
+        id: newMessage.to.id,
+      },
+    };
   }
 
   async update(id: number, body: MessageUpdateDto) {
