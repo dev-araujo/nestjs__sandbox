@@ -7,10 +7,12 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import {MessageCreateDto} from './dto/message-create.dto'
 import { MessageUpdateDto } from './dto/message-update.dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Controller('messages')
 export class MessagesController {
@@ -22,8 +24,9 @@ export class MessagesController {
   }
 
   @Get()
-  findAll() {
-    return this.messagesService.findAll();
+  findAll(@Query() pagination: PaginationDto) {
+
+    return this.messagesService.findAll(pagination);
   }
 
   @Get(':id')

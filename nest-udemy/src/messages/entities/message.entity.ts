@@ -29,11 +29,11 @@ export class Message {
   @UpdateDateColumn()
   updatedAt?: Date;
 
-  @ManyToOne(() => Person) // Muitas mensagens podem ser enviadas por uma única pessoa
+  @ManyToOne(() => Person, { onDelete: 'CASCADE', onUpdate: 'CASCADE' }) // Muitas mensagens podem ser enviadas por uma única pessoa
   @JoinColumn({ name: 'from' }) // Especifica a coluna "de" que armazena o ID da pessioa que ENVIOU a mensagem
   from: Person;
 
-  @ManyToOne(() => Person) // Muitas mensagens podem ser enviadas por uma única pessoa
+  @ManyToOne(() => Person, { onDelete: 'CASCADE', onUpdate: 'CASCADE' }) // Muitas mensagens podem ser enviadas por uma única pessoa
   @JoinColumn({ name: 'to' }) // Especifica a coluna "de" que armazena o ID da pessioa que ENVIOU a mensagem
   to: Person;
 }
