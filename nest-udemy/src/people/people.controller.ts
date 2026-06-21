@@ -11,6 +11,7 @@ import {
 import { PeopleService } from './people.service';
 import { PersonCreateDto } from './dto/person-create.dto';
 import { PersonUpdateDto } from './dto/person-update.dto';
+import { ParseIntIdPipe } from '../common/pipes/parse-int-id.pipe';
 
 @Controller('people')
 export class PeopleController {
@@ -27,17 +28,17 @@ export class PeopleController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseIntIdPipe) id: number) {
     return this.peopleService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() body: PersonUpdateDto) {
+  update(@Param('id', ParseIntIdPipe) id: number, @Body() body: PersonUpdateDto) {
     return this.peopleService.update(id, body);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', ParseIntIdPipe) id: number) {
     return this.peopleService.remove(id);
   }
 }
